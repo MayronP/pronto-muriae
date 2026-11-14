@@ -1,0 +1,347 @@
+erDiagram
+    acompanhante {
+        int id_acompanhante PK
+        int id_atendimento FK
+        int id_usuario FK
+        varchar nome
+        varchar parentesco
+        varchar documento
+        varchar telefone
+        datetime data_hora_entrada
+        datetime data_hora_saida
+    }
+    administracao {
+        int id_administracao PK
+        int id_item_prescricao FK
+        datetime data_hora_prevista
+        varchar situacao
+        int id_usuario FK
+        datetime data_hora
+        varchar motivo
+    }
+    anexo {
+        int id_anexo PK
+        int id_atendimento FK
+        int id_exame FK
+        int id_usuario FK
+        varchar nome_original
+        varchar caminho_arquivo
+        varchar tipo_arquivo
+        bigint tamanho
+        datetime data_hora
+    }
+    atendimento {
+        int id_atendimento PK
+        int id_paciente FK
+        int id_usuario_admissao FK
+        int id_medico FK
+        varchar numero UK
+        datetime data_hora_chegada
+        datetime data_hora_inicio_atendimento
+        int id_classificacao_inicio FK
+        int minutos_espera
+        varchar status
+        text observacao_inicial
+        datetime data_hora_inicio_observacao
+        varchar leito_observacao
+        varchar desfecho
+        varchar cid_principal FK
+        datetime data_hora_obito
+        varchar declaracao_obito
+        tinyint termo_alta_pedido
+        text resumo_final
+        text observacoes_finais
+        datetime data_hora_encerramento
+        int tempo_alvo_inicio
+    }
+    chamada {
+        int id_chamada PK
+        int id_atendimento FK
+        int id_usuario FK
+        varchar local
+        datetime data_hora
+    }
+    cid10 {
+        varchar codigo PK
+        varchar descricao
+    }
+    classificacao_risco {
+        int id_classificacao PK
+        varchar nome UK
+        varchar cor
+        tinyint ordem_prioridade
+        smallint tempo_alvo_minutos
+        tinyint ativo
+    }
+    documento {
+        int id_documento PK
+        int id_atendimento FK
+        int id_usuario FK
+        varchar tipo
+        text conteudo
+        tinyint dias_afastamento
+        varchar cid FK
+        varchar destino
+        datetime data_hora
+    }
+    evolucao_enfermagem {
+        int id_evolucao_enfermagem PK
+        int id_atendimento FK
+        int id_usuario FK
+        datetime data_hora
+        text avaliacao
+        text diagnostico
+        text planejamento
+        text implementacao
+        text evolucao
+    }
+    evolucao_medica {
+        int id_evolucao PK
+        int id_atendimento FK
+        int id_medico FK
+        datetime data_hora
+        text evolucao
+        text observacoes
+        text hipotese_diagnostica
+        text conclusao_clinica
+    }
+    exame {
+        int id_exame PK
+        int id_atendimento FK
+        int id_solicitante FK
+        int id_usuario_resultado FK
+        varchar descricao
+        datetime data_hora_solicitacao
+        varchar status
+        text resultado
+        datetime data_hora_resultado
+    }
+    log_auditoria {
+        bigint id_log PK
+        int id_usuario FK
+        varchar acao
+        varchar entidade
+        bigint registro_id
+        datetime data_hora
+        text detalhes
+    }
+    medicamento {
+        int id_medicamento PK
+        varchar nome
+        varchar apresentacao
+        tinyint ativo
+    }
+    notificacao {
+        int id_notificacao PK
+        int id_atendimento FK
+        int id_usuario FK
+        varchar agravo
+        varchar tipo
+        datetime data_hora
+        varchar situacao
+        int id_usuario_notificacao FK
+        datetime data_hora_notificacao
+        varchar numero_sinan
+    }
+    paciente {
+        int id_paciente PK
+        varchar nome_completo
+        varchar nome_social
+        varchar cpf UK
+        char cns UK
+        date data_nascimento
+        varchar nome_mae
+        varchar sexo
+        varchar telefone
+        varchar endereco
+        varchar numero
+        varchar bairro
+        varchar cidade
+        char estado
+        varchar nome_contato
+        varchar telefone_contato
+        varchar alergias
+        tinyint nao_identificado
+        varchar caracteristicas
+    }
+    passagem_plantao {
+        int id_passagem PK
+        int id_atendimento FK
+        int id_usuario FK
+        text situacao
+        text historico
+        text avaliacao
+        text recomendacao
+        datetime data_hora
+        int id_usuario_recebimento FK
+        datetime data_hora_recebimento
+    }
+    perfil {
+        int id_perfil PK
+        varchar nome UK
+        varchar descricao
+        tinyint ativo
+    }
+    prescricao {
+        int id_prescricao PK
+        int id_atendimento FK
+        int id_medico FK
+        datetime data_hora
+        text observacoes
+        varchar status
+    }
+    prescricao_medicamento {
+        int id_item_prescricao PK
+        int id_prescricao FK
+        int id_medicamento FK
+        varchar dose
+        varchar via
+        varchar frequencia
+        tinyint intervalo_horas
+        tinyint se_necessario
+        datetime data_hora_inicio
+        text observacoes
+        varchar situacao
+    }
+    protocolo {
+        int id_protocolo PK
+        varchar nome UK
+        varchar marco_inicial
+        smallint janela_minutos
+        varchar fonte
+        tinyint ativo
+    }
+    protocolo_atendimento {
+        int id_protocolo_atendimento PK
+        int id_atendimento FK
+        int id_protocolo FK
+        int id_usuario FK
+        datetime data_hora_abertura
+        datetime inicio_sintomas
+        varchar situacao
+        datetime data_hora_encerramento
+        varchar observacao
+    }
+    protocolo_etapa {
+        int id_etapa PK
+        int id_protocolo FK
+        varchar descricao
+        smallint meta_minutos
+        tinyint ordem
+    }
+    protocolo_registro {
+        int id_registro PK
+        int id_protocolo_atendimento FK
+        int id_etapa FK
+        int id_usuario FK
+        datetime data_hora
+    }
+    reclassificacao {
+        int id_reclassificacao PK
+        int id_atendimento FK
+        int id_usuario FK
+        int id_classificacao_anterior FK
+        int id_classificacao_nova FK
+        text motivo
+        datetime data_hora
+    }
+    sinal_vital {
+        int id_sinal_vital PK
+        int id_atendimento FK
+        int id_usuario FK
+        datetime data_hora
+        varchar pressao_arterial
+        decimal temperatura
+        smallint frequencia_cardiaca
+        smallint frequencia_respiratoria
+        tinyint saturacao
+        tinyint oxigenio_suplementar
+        char nivel_consciencia
+        tinyint dor
+        smallint glicemia
+        varchar observacoes
+    }
+    triagem {
+        int id_triagem PK
+        int id_atendimento FK,UK
+        int id_enfermeiro FK
+        int id_classificacao FK
+        text queixa_principal
+        text observacoes_iniciais
+        varchar pressao_arterial
+        decimal temperatura
+        smallint frequencia_cardiaca
+        smallint frequencia_respiratoria
+        tinyint saturacao
+        tinyint oxigenio_suplementar
+        char nivel_consciencia
+        tinyint gestante
+        tinyint dor
+        smallint glicemia
+        decimal peso
+        datetime data_hora
+        datetime data_hora_reclassificacao
+    }
+    usuario {
+        int id_usuario PK
+        int id_perfil FK
+        varchar nome
+        varchar login UK
+        varchar email UK
+        varchar registro_profissional
+        varchar senha_hash
+        tinyint ativo
+        datetime data_cadastro
+    }
+    atendimento ||--o{ acompanhante : "id_atendimento"
+    usuario ||--o{ acompanhante : "id_usuario"
+    prescricao_medicamento ||--o{ administracao : "id_item_prescricao"
+    usuario |o--o{ administracao : "id_usuario"
+    atendimento ||--o{ anexo : "id_atendimento"
+    exame |o--o{ anexo : "id_exame"
+    usuario ||--o{ anexo : "id_usuario"
+    cid10 |o--o{ atendimento : "cid_principal"
+    classificacao_risco |o--o{ atendimento : "id_classificacao_inicio"
+    usuario |o--o{ atendimento : "id_medico"
+    paciente ||--o{ atendimento : "id_paciente"
+    usuario ||--o{ atendimento : "id_usuario_admissao"
+    atendimento ||--o{ chamada : "id_atendimento"
+    usuario ||--o{ chamada : "id_usuario"
+    atendimento ||--o{ documento : "id_atendimento"
+    cid10 |o--o{ documento : "cid"
+    usuario ||--o{ documento : "id_usuario"
+    atendimento ||--o{ evolucao_enfermagem : "id_atendimento"
+    usuario ||--o{ evolucao_enfermagem : "id_usuario"
+    atendimento ||--o{ evolucao_medica : "id_atendimento"
+    usuario ||--o{ evolucao_medica : "id_medico"
+    atendimento ||--o{ exame : "id_atendimento"
+    usuario ||--o{ exame : "id_solicitante"
+    usuario |o--o{ exame : "id_usuario_resultado"
+    usuario ||--o{ log_auditoria : "id_usuario"
+    atendimento ||--o{ notificacao : "id_atendimento"
+    usuario ||--o{ notificacao : "id_usuario"
+    usuario |o--o{ notificacao : "id_usuario_notificacao"
+    atendimento ||--o{ passagem_plantao : "id_atendimento"
+    usuario |o--o{ passagem_plantao : "id_usuario_recebimento"
+    usuario ||--o{ passagem_plantao : "id_usuario"
+    atendimento ||--o{ prescricao : "id_atendimento"
+    usuario ||--o{ prescricao : "id_medico"
+    medicamento ||--o{ prescricao_medicamento : "id_medicamento"
+    prescricao ||--o{ prescricao_medicamento : "id_prescricao"
+    atendimento ||--o{ protocolo_atendimento : "id_atendimento"
+    protocolo ||--o{ protocolo_atendimento : "id_protocolo"
+    usuario ||--o{ protocolo_atendimento : "id_usuario"
+    protocolo ||--o{ protocolo_etapa : "id_protocolo"
+    protocolo_etapa ||--o{ protocolo_registro : "id_etapa"
+    protocolo_atendimento ||--o{ protocolo_registro : "id_protocolo_atendimento"
+    usuario ||--o{ protocolo_registro : "id_usuario"
+    classificacao_risco ||--o{ reclassificacao : "id_classificacao_anterior"
+    atendimento ||--o{ reclassificacao : "id_atendimento"
+    classificacao_risco ||--o{ reclassificacao : "id_classificacao_nova"
+    usuario ||--o{ reclassificacao : "id_usuario"
+    atendimento ||--o{ sinal_vital : "id_atendimento"
+    usuario ||--o{ sinal_vital : "id_usuario"
+    atendimento ||--o| triagem : "id_atendimento"
+    classificacao_risco ||--o{ triagem : "id_classificacao"
+    usuario ||--o{ triagem : "id_enfermeiro"
+    perfil ||--o{ usuario : "id_perfil"
